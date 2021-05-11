@@ -3,11 +3,15 @@ package com.example.gapshap;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.gapshap.databinding.ActivitySignUpBinding;
+import com.example.gapshap.models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -19,6 +23,7 @@ public class SignUpActivity extends AppCompatActivity {
     ActivitySignUpBinding binding;
     private FirebaseAuth auth;
     FirebaseDatabase database;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +36,15 @@ public class SignUpActivity extends AppCompatActivity {
         auth=FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
 
+        progressDialog = new ProgressDialog(SignUpActivity.this);
+        progressDialog.setTitle("Creating Account");
+        progressDialog.setMessage("Your account is being created.");
+
         binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                progressDialog.show();
 
                 auth.createUserWithEmailAndPassword
                         (binding.email.getText().toString() , binding.password.getText().toString()).
@@ -41,7 +52,15 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
+                        progressDialog.dismiss();
+
                         if(task.isSuccessful()){
+
+                            Users user = new Users(binding.userName.getText().toString(), binding.email.getText().toString(), binding.password.getText().toString());
+
+                            String id = task.getResult().getUser().getUid();
+                            database.getReference().child("Users").child(id).setValue(user);
+
                             Toast.makeText(SignUpActivity.this,"Account Created Successfully",Toast.LENGTH_SHORT).show();
                         }
                         else{
@@ -52,7 +71,13 @@ public class SignUpActivity extends AppCompatActivity {
                 });
             }
         });
-
+        binding.alreadyHaveAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }
