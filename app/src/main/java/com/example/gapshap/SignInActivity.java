@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -60,21 +61,33 @@ public class SignInActivity extends AppCompatActivity {
         binding.btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(TextUtils.isEmpty(binding.email.getText().toString())){
+                    binding.email.setError("Enter email");
+                    binding.email.requestFocus();
+                }
+                else if(TextUtils.isEmpty(binding.password.getText().toString())){
+                    binding.password.setError("Enter Password");
+                    binding.password.requestFocus();
+                }
+                else{
+                    auth.signInWithEmailAndPassword(binding.email.getText().toString(), binding.password.getText().toString()).
+                            addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    progressDialog.dismiss();
+                                    if(task.isSuccessful()){
+                                        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                    else{
+                                        Toast.makeText(SignInActivity.this,"Invalid Credentials", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
 
-                auth.signInWithEmailAndPassword(binding.email.getText().toString(), binding.password.getText().toString()).
-                        addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.dismiss();
-                        if(task.isSuccessful()){
-                            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                            startActivity(intent);
-                        }
-                        else{
-                            Toast.makeText(SignInActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                }
+
                 binding.clickSignUp.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -82,6 +95,7 @@ public class SignInActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 });
+
                 binding.btnGoogle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
