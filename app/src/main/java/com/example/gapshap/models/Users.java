@@ -2,7 +2,7 @@ package com.example.gapshap.models;
 
 public class Users {
 
-    String profilePic, userName, email, password, userID, lastMessage;
+    String profilePic, userName, email, password, userID, lastMessage, about;
 
     public Users(String profilePic, String userName, String email, String password, String userID, String lastMessage) {
         this.profilePic = profilePic;
@@ -70,4 +70,11 @@ public class Users {
         this.lastMessage = lastMessage;
     }
 
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
 }

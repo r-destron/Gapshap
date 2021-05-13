@@ -49,6 +49,9 @@ public class SignInActivity extends AppCompatActivity {
         progressDialog.setTitle("Login");
         progressDialog.setMessage("Login to your account.");
 
+        //binding.email.setText("");
+        //binding.password.setText("");
+
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -56,7 +59,22 @@ public class SignInActivity extends AppCompatActivity {
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+
+        binding.clickSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        binding.btnGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signIn();
+            }
+        });
 
         binding.btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +88,7 @@ public class SignInActivity extends AppCompatActivity {
                     binding.password.requestFocus();
                 }
                 else{
+                    progressDialog.show();
                     auth.signInWithEmailAndPassword(binding.email.getText().toString(), binding.password.getText().toString()).
                             addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -78,34 +97,17 @@ public class SignInActivity extends AppCompatActivity {
                                     if(task.isSuccessful()){
                                         Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                                         startActivity(intent);
+                                        Toast.makeText(SignInActivity.this,"Signed in successfully", Toast.LENGTH_SHORT).show();
                                         finish();
                                     }
                                     else{
-                                        Toast.makeText(SignInActivity.this,"Invalid Credentials", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SignInActivity.this,"Authentication failed", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
 
                 }
 
-                binding.clickSignUp.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
-                        startActivity(intent);
-                    }
-                });
-
-                binding.btnGoogle.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        signIn();
-                    }
-                });
-                if(auth.getCurrentUser() != null){
-                    Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
             }
         });
     }
@@ -155,6 +157,7 @@ public class SignInActivity extends AppCompatActivity {
                             Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                             startActivity(intent);
                             Toast.makeText(SignInActivity.this, "Signed In with Google", Toast.LENGTH_SHORT).show();
+                            finish();
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -165,4 +168,13 @@ public class SignInActivity extends AppCompatActivity {
                 });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(auth.getCurrentUser() != null){
+            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
 }

@@ -11,12 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Gapshap">
+        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".GroupChatActivity" />
         <activity
             android:name=".ChatboxActivity"
             android:label="@string/title_activity_chatbox"
-            android:theme="@style/Theme.Gapshap.NoActionBar"></activity>
+            android:theme="@style/Theme.Gapshap.NoActionBar" />
         <activity android:name=".SignInActivity"></activity>
-        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".SignUpActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
