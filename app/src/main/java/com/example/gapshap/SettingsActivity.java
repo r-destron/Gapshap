@@ -3,11 +3,13 @@ package com.example.gapshap;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
 import com.example.gapshap.databinding.ActivitySettingsBinding;
@@ -44,11 +46,22 @@ public class SettingsActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
 
+        //Code for animation
+        ViewCompat.animate( binding.linear )
+                .translationY(-20)
+                .setStartDelay(400)
+                .setDuration(1000).setInterpolator(
+                new DecelerateInterpolator(1.1f)).start();
+        ViewCompat.animate( binding.linear )
+                .translationY(10)
+                .setStartDelay(800)
+                .setDuration(1000).setInterpolator(
+                new DecelerateInterpolator(1.1f)).start();
+
         binding.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -95,6 +108,34 @@ public class SettingsActivity extends AppCompatActivity {
 
             }
         });
+        binding.privacyPolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsActivity.this, AboutActivity.class);
+                startActivity(intent);
+            }
+        });
+        binding.about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsActivity.this, AboutActivity.class);
+                startActivity(intent);
+            }
+        });
+        binding.invite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsActivity.this, AboutActivity.class);
+                startActivity(intent);
+            }
+        });
+        binding.help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SettingsActivity.this, AboutActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -123,5 +164,18 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ViewCompat.animate(binding.linear)
+                .translationY(-20)
+                .setStartDelay(400)
+                .setDuration(1000).setInterpolator(
+                new DecelerateInterpolator(1.1f)).start();
+        ViewCompat.animate(binding.linear)
+                .translationY(10)
+                .setStartDelay(800)
+                .setDuration(1000).setInterpolator(
+                new DecelerateInterpolator(1.1f)).start();
+    }
 }

@@ -12,20 +12,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gapshap.R;
+import com.example.gapshap.models.GroupMessagesModel;
 import com.example.gapshap.models.MessagesModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ChatAdapter extends RecyclerView.Adapter{
+public class GroupChatAdapter extends RecyclerView.Adapter{
 
-    ArrayList<MessagesModel> messagesModels;
+    ArrayList<GroupMessagesModel> messagesModels;
     Context context;
     int SENDER_VIEW_TYPE = 1;
     int RECEIVER_VIEW_TYPE = 2;
 
-    public ChatAdapter(ArrayList<MessagesModel> messagesModels, Context context) {
+    public GroupChatAdapter(ArrayList<GroupMessagesModel> messagesModels, Context context) {
         this.messagesModels = messagesModels;
         this.context = context;
     }
@@ -58,33 +59,13 @@ public class ChatAdapter extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-        MessagesModel messagesModel = messagesModels.get(position); //position is used to set the messages according to their time
+        GroupMessagesModel messagesModel = messagesModels.get(position); //position is used to set the messages according to their time
 
         if(holder.getClass() == SenderViewHolder.class){
             ((SenderViewHolder)holder).senderMsg.setText(messagesModel.getMessage());
-            if(messagesModel.getType().equals("image")){
-                ((SenderViewHolder) holder).image.setVisibility(View.VISIBLE);
-                ((SenderViewHolder) holder).senderMsg.setVisibility(View.GONE);
-
-                Picasso.get().load(messagesModel.getImageUrl()).into(((SenderViewHolder) holder).image);
-            }
-            else{
-                ((SenderViewHolder) holder).senderMsg.setVisibility(View.VISIBLE);
-                ((SenderViewHolder) holder).image.setVisibility(View.GONE);
-            }
         }
         else{
             ((ReceiverViewHolder)holder).receiverMsg.setText(messagesModel.getMessage());
-            if(messagesModel.getType().equals("image")){
-                ((ReceiverViewHolder) holder).image.setVisibility(View.VISIBLE);
-                ((ReceiverViewHolder) holder).receiverMsg.setVisibility(View.GONE);
-
-                Picasso.get().load(messagesModel.getImageUrl()).into(((ReceiverViewHolder) holder).image);
-            }
-            else{
-                ((ReceiverViewHolder) holder).receiverMsg.setVisibility(View.VISIBLE);
-                ((ReceiverViewHolder) holder).image.setVisibility(View.GONE);
-            }
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

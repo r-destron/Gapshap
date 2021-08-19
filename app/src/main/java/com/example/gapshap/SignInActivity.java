@@ -2,6 +2,7 @@ package com.example.gapshap;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.ViewCompat;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
 import com.example.gapshap.databinding.ActivitySignInBinding;
@@ -35,19 +37,56 @@ public class SignInActivity extends AppCompatActivity {
     FirebaseDatabase database;
     GoogleSignInClient mGoogleSignInClient;
 
+    //Here we are setting animation delay time
+    public static final int STARTUP_DELAY = 500;
+    public static final int ANIM_ITEM_DURATION = 1000;
+    public static final int EDITTEXT_DELAY = 600;
+    public static final int BUTTON_DELAY = 700;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySignInBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        getSupportActionBar().hide();
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         progressDialog = new ProgressDialog(SignInActivity.this);
         progressDialog.setTitle("Login");
         progressDialog.setMessage("Login to your account.");
+
+        //Code for animation
+        ViewCompat.animate( binding.icon )
+                .translationY(50)
+                .setStartDelay(STARTUP_DELAY)
+                .setDuration(ANIM_ITEM_DURATION).setInterpolator(
+                new DecelerateInterpolator(1.1f)).start();
+        ViewCompat.animate( binding.email)
+                .translationY(50)
+                .setStartDelay(EDITTEXT_DELAY)
+                .setDuration(ANIM_ITEM_DURATION).setInterpolator(
+                new DecelerateInterpolator(1.1f)).start();
+        ViewCompat.animate( binding.password )
+                .translationY(50)
+                .setStartDelay(EDITTEXT_DELAY)
+                .setDuration(ANIM_ITEM_DURATION).setInterpolator(
+                new DecelerateInterpolator(1.1f)).start();
+        ViewCompat.animate( binding.clickSignUp )
+                .translationY(50)
+                .setStartDelay(EDITTEXT_DELAY)
+                .setDuration(ANIM_ITEM_DURATION).setInterpolator(
+                new DecelerateInterpolator(1.1f)).start();
+        ViewCompat.animate( binding.btnSignIn )
+                .translationY(50)
+                .setStartDelay(BUTTON_DELAY)
+                .setDuration(ANIM_ITEM_DURATION).setInterpolator(
+                new DecelerateInterpolator(1.1f)).start();
+        ViewCompat.animate( binding.btnGoogle)
+                .translationY(20)
+                .setStartDelay(BUTTON_DELAY)
+                .setDuration(ANIM_ITEM_DURATION).setInterpolator(
+                new DecelerateInterpolator(1.1f)).start();
 
         //binding.email.setText("");
         //binding.password.setText("");

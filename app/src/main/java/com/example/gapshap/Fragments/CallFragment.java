@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.gapshap.R;
 
+//This fragment will be updated in next version of app
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link CallFragment#newInstance} factory method to

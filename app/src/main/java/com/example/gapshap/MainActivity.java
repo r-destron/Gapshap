@@ -40,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
         binding.viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager()));
         binding.tabLayout.setupWithViewPager(binding.viewPager);
 
-
-
     }
 
     @Override
@@ -50,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -64,8 +64,11 @@ public class MainActivity extends AppCompatActivity {
                 auth.signOut();
                 Intent intent1 = new Intent(MainActivity.this, SignInActivity.class);
                 startActivity(intent1);
+                finish();
                 break;
             case R.id.groupChat:
+                Intent intent2 = new Intent(MainActivity.this, GroupChatActivity.class);
+                startActivity(intent2);
         }
         return true;
     }

@@ -1,34 +1,23 @@
 package com.example.gapshap.models;
 
-public class MessagesModel {
+public class GroupMessagesModel {
 
     String uId;
     String message;
-    String imageUrl;
-    String type;
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     Long timestamp;
 
-    public MessagesModel(String uId, String message, Long timestamp) {
+    public GroupMessagesModel(String uId, String message, Long timestamp) {
         this.uId = uId;
         this.message = message;
         this.timestamp = timestamp;
     }
 
-    public MessagesModel(String uId, String message) {
+    public GroupMessagesModel(String uId, String message) {
         this.uId = uId;
         this.message = message;
     }
 
-    public MessagesModel() {
+    public GroupMessagesModel() {
     }
 
     public String getuId() {
@@ -55,11 +44,4 @@ public class MessagesModel {
         this.timestamp = timestamp;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 }

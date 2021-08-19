@@ -124,9 +124,9 @@
         android:padding="40dp">
 
         <TextView
-            android:id="@+id/PrivacyPolicy"
+            android:id="@+id/privacyPolicy"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="54dp"
             android:gravity="center_horizontal"
             android:padding="10dp"
             android:text="Privacy Policy"
@@ -135,9 +135,9 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/AboutUs"
+            android:id="@+id/about"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:gravity="center_horizontal"
             android:padding="10dp"
             android:text="About Us"

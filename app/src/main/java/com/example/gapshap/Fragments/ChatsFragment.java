@@ -68,6 +68,7 @@ public class ChatsFragment extends Fragment {
                     //if we want the logged in user should not be shown on the recycler view simply remove the above line of code and use the following loop.
                     if (!users.getUserID().equals(user.getUid())) {
                         list.add(users);
+
                     }
                 }
                 usersAdapter.notifyDataSetChanged();
